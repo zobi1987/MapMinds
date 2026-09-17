@@ -1,0 +1,45 @@
+{
+  "name": "mapminds",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "validate:catalog": "tsx scripts/validate-catalog.ts",
+    "audit:sources": "node scripts/audit-wikidata.mjs",
+    "build": "npm run validate:catalog && tsc -b && vite build",
+    "lint": "oxlint",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "test:pages": "npm run build && playwright test --config=playwright.pages.config.ts",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-simple-maps": "^5.0.5",
+    "topojson-client": "^3.1.0",
+    "world-atlas": "^2.0.2",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.7",
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@types/react-simple-maps": "^3.0.6",
+    "@types/topojson-client": "^3.1.5",
+    "@vitejs/plugin-react": "^6.1.1",
+    "@vitest/coverage-v8": "^5.0.1",
+    "jsdom": "^30.1.0",
+    "oxlint": "^1.81.0",
+    "typescript": "~6.0.2",
+    "tsx": "^4.20.6",
+    "vite": "^8.3.0",
+    "vitest": "^5.0.1"
+  }
+}

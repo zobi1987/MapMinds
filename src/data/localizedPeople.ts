@@ -22,6 +22,21 @@ const englishDisplayNames: Partial<Record<string, string>> = {
   Q7302: 'George Frideric Handel',
   Q7315: 'Pyotr Ilyich Tchaikovsky',
   Q7327: 'Yuri Gagarin',
+  Q9682: "Elizabeth II",
+  Q30487: "Mikhail Gorbachev",
+  Q42013: "Anwar Sadat",
+  Q129234: "Hatshepsut",
+  Q720: "Genghis Khan",
+  Q7192: "Qin Shi Huang",
+  Q43347: "Rumi",
+  Q8011: "Avicenna",
+  Q619: "Nicolaus Copernicus",
+  Q913: "Socrates",
+  Q868: "Aristotle",
+  Q859: "Plato",
+  Q5597: "Raphael",
+  Q41264: "Johannes Vermeer",
+  Q5432: "Francisco Goya",
 }
 
 export function localizePerson(person: Person, language: Language): Person {

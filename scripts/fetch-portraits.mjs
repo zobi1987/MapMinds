@@ -8,8 +8,24 @@ const chunks = (values, size) =>
   Array.from({ length: Math.ceil(values.length / size) }, (_, index) =>
     values.slice(index * size, index * size + size))
 
+const headers = { 'User-Agent': 'MapMindsCatalog/1.0 (https://github.com/zobi1987/MapMinds)' }
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
+async function fetchJson(url) {
+  for (let attempt = 0; attempt < 6; attempt += 1) {
+    const response = await fetch(url, { headers })
+    if (response.ok) return response.json()
+    if (response.status === 429 || response.status >= 500) {
+      await sleep(1500 * (attempt + 1))
+      continue
+    }
+    throw new Error(`${url} antwortete mit ${response.status}`)
+  }
+  throw new Error(`${url} nach mehreren Versuchen fehlgeschlagen`)
+}
+
 const filenames = new Map()
-for (const batch of chunks(ids, 50)) {
+for (const batch of chunks(ids, 40)) {
   const params = new URLSearchParams({
     action: 'wbgetentities',
     ids: batch.map(({ id }) => id).join('|'),
@@ -17,13 +33,12 @@ for (const batch of chunks(ids, 50)) {
     format: 'json',
     origin: '*',
   })
-  const response = await fetch(`https://www.wikidata.org/w/api.php?${params}`)
-  if (!response.ok) throw new Error(`Wikidata antwortete mit ${response.status}`)
-  const data = await response.json()
+  const data = await fetchJson(`https://www.wikidata.org/w/api.php?${params}`)
   for (const { id } of batch) {
     const filename = data.entities[id]?.claims?.P18?.[0]?.mainsnak?.datavalue?.value
     if (filename) filenames.set(id, filename)
   }
+  await sleep(400)
 }
 
 const stripHtml = (value = '') => value
@@ -34,7 +49,7 @@ const stripHtml = (value = '') => value
   .trim()
 
 const portraits = {}
-for (const batch of chunks([...filenames.entries()], 25)) {
+for (const batch of chunks([...filenames.entries()], 15)) {
   const params = new URLSearchParams({
     action: 'query',
     titles: batch.map(([, filename]) => `File:${filename}`).join('|'),
@@ -44,9 +59,7 @@ for (const batch of chunks([...filenames.entries()], 25)) {
     format: 'json',
     origin: '*',
   })
-  const response = await fetch(`https://commons.wikimedia.org/w/api.php?${params}`)
-  if (!response.ok) throw new Error(`Commons antwortete mit ${response.status}`)
-  const data = await response.json()
+  const data = await fetchJson(`https://commons.wikimedia.org/w/api.php?${params}`)
   for (const page of Object.values(data.query.pages)) {
     const info = page.imageinfo?.[0]
     const filename = page.title?.replace(/^File:/, '')
@@ -60,6 +73,7 @@ for (const batch of chunks([...filenames.entries()], 25)) {
       license: meta.LicenseShortName?.value || meta.UsageTerms?.value || 'Siehe Bildquelle',
     }
   }
+  await sleep(500)
 }
 
 const output = `// Automatisch aus Wikidata und Wikimedia Commons erzeugt.\n`

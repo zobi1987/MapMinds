@@ -354,8 +354,14 @@
   .card-map-art { height: auto; min-height: 310px; }
   .game-grid { grid-template-columns: 1fr; }
   .map-column { min-height: 0; }
-  .world-map svg { max-height: 55vh; }
-  .guess-panel { overflow: visible; }
+  .world-map { height: 70vh; overflow: hidden; display: flex; justify-content: center; }
+  .world-map svg { width: auto; height: 100%; max-height: none; flex: 0 0 auto; }
+  .guess-panel { overflow: visible; padding: 16px 16px 22px; }
+  .guess-panel h1 { margin: 6px 0 12px; font-size: 1.55rem; }
+  .score-track { margin-bottom: 14px; }
+  .hint-list { min-height: 0; gap: 6px; }
+  .hint { min-height: 0; padding: 6px 10px; }
+  .answer-form { margin-top: 14px; }
 }
 
 @media (max-width: 620px) {
@@ -377,8 +383,8 @@
   .game-grid { min-height: 0; }
   .map-legend small { display: none; }
   .map-legend { left: 8px; bottom: 8px; }
-  .guess-panel { padding: 28px 20px; }
-  .guess-panel h1 { font-size: 2.6rem; }
+  .guess-panel { padding: 14px 12px 18px; }
+  .guess-panel h1 { font-size: 1.45rem; }
   .answer-form > div { display: block; }
   .answer-form input { border: 1px solid #bfc5bc; border-radius: 2px; }
   .answer-form button { width: 100%; margin-top: 7px; border-radius: 2px; }

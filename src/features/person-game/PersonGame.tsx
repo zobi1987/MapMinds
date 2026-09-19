@@ -157,7 +157,6 @@ export function PersonGame({ onExit }: PersonGameProps) {
                     value={answer}
                     onChange={(event) => setAnswer(event.target.value)}
                     placeholder={copy.answerPlaceholder}
-                    autoFocus
                   />
                   <button className="primary-button" type="submit">{copy.check}</button>
                 </div>

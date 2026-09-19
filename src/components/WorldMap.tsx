@@ -77,7 +77,7 @@ export function WorldMap({ person, revealNames = false }: WorldMapProps) {
       >
         <ZoomableGroup
           minZoom={1}
-          maxZoom={6}
+          maxZoom={16}
           center={[0, 12]}
           onMove={({ zoom: nextZoom }) => setZoom(nextZoom ?? 1)}
         >

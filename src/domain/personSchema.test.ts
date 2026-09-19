@@ -3,8 +3,8 @@ import { people } from '../data/people'
 import { validateCatalog } from './personSchema'
 
 describe('Personenkatalog', () => {
-  it('liefert 100 vollständig spielbare und belegte Personen aus', () => {
-    expect(people).toHaveLength(100)
+  it('liefert 200 vollständig spielbare und belegte Personen aus', () => {
+    expect(people).toHaveLength(200)
     expect(people.every((person) => person.hints.length === 3)).toBe(true)
     expect(people.every((person) => person.sources.length > 0)).toBe(true)
     expect(people.every((person) => person.portrait?.url.startsWith('https://'))).toBe(true)

@@ -32,6 +32,21 @@ test('Karte und Eingabe passen in eine mobile Ansicht', async ({ page }) => {
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true)
 })
 
+test('auf dem Handy ist die Karte größer als das Antwortfeld und das Namensfeld nicht vorausgewählt', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/')
+  await page.evaluate(() => localStorage.setItem('mapminds.introSeen', 'true'))
+  await page.reload()
+  await page.getByRole('button', { name: /Start game/ }).click()
+
+  const map = await page.locator('.world-map svg').boundingBox()
+  const panel = await page.locator('.guess-panel').boundingBox()
+  expect(map && panel).toBeTruthy()
+  expect(map!.height).toBeGreaterThan(panel!.height)
+  expect(map!.height / 844).toBeGreaterThan(0.62)
+  await expect(page.getByLabel('Name of the person')).not.toBeFocused()
+})
+
 test('Marker und Jahreszahlen behalten beim Zoomen ihre lesbare Größe', async ({ page }) => {
   await page.goto('/')
   await page.evaluate(() => localStorage.setItem('mapminds.introSeen', 'true'))
@@ -59,6 +74,28 @@ test('Marker und Jahreszahlen behalten beim Zoomen ihre lesbare Größe', async 
   expect(countriesAfter!.width).toBeGreaterThan(countriesBefore!.width * 1.2)
   expect(markerAfter!.width).toBeLessThan(markerBefore!.width * 1.2)
   expect(labelAfter!.width).toBeLessThan(labelBefore!.width * 1.2)
+})
+
+test('die Karte lässt sich deutlich weiter als sechsfach hineinzoomen', async ({ page }) => {
+  await page.goto('/')
+  await page.evaluate(() => localStorage.setItem('mapminds.introSeen', 'true'))
+  await page.reload()
+  await page.getByRole('button', { name: /Start game/ }).click()
+
+  const map = page.locator('.world-map svg')
+  const countries = page.locator('.rsm-geographies')
+  const before = await countries.boundingBox()
+  expect(before).toBeTruthy()
+
+  await map.hover()
+  for (let step = 0; step < 18; step += 1) {
+    await page.mouse.wheel(0, -400)
+  }
+  await page.waitForTimeout(400)
+
+  const after = await countries.boundingBox()
+  expect(after).toBeTruthy()
+  expect(after!.width / before!.width).toBeGreaterThan(8)
 })
 
 test('Ortsnamen bleiben bis zur Auflösung verborgen und erscheinen mit Quellen', async ({ page }) => {

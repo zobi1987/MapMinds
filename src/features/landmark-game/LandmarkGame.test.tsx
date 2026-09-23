@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { landmarks } from '../../data/landmarks'
 import { localizeLandmark } from '../../data/localizedLandmarks'
@@ -14,6 +14,33 @@ const renderGame = (onExit = () => {}) => render(
 
 describe('Was ist das?', () => {
   beforeEach(() => window.localStorage.clear())
+
+  it('lässt das Foto vergrößern und setzt die Größe in der nächsten Runde zurück', async () => {
+    renderGame()
+    const user = userEvent.setup()
+    const photo = screen.getByRole('img', { name: 'Aerial photograph of a landmark' })
+    const scale = () => Number(/scale\(([^)]+)\)/.exec(photo.style.transform)?.[1] ?? 1)
+
+    expect(scale()).toBe(1)
+    await user.click(screen.getByRole('button', { name: 'Zoom in' }))
+    expect(scale()).toBeGreaterThan(1)
+
+    fireEvent.wheel(photo, { deltaY: -120 })
+    const zoomed = scale()
+    expect(zoomed).toBeGreaterThan(1)
+
+    await user.click(screen.getByRole('button', { name: 'Zoom out' }))
+    expect(scale()).toBeLessThan(zoomed)
+
+    await user.click(screen.getByRole('button', { name: /Reveal clue 1/ }))
+    await user.click(screen.getByRole('button', { name: /Reveal clue 2/ }))
+    await user.click(screen.getByRole('button', { name: /Reveal clue 3/ }))
+    await user.click(screen.getByRole('button', { name: /Reveal landmark/ }))
+    await user.click(screen.getByRole('button', { name: /Next landmark/ }))
+
+    const nextPhoto = screen.getByRole('img', { name: 'Aerial photograph of a landmark' })
+    expect(Number(/scale\(([^)]+)\)/.exec(nextPhoto.style.transform)?.[1] ?? 1)).toBe(1)
+  })
 
   it('zeigt beim Raten nur das Foto und die Karte erst nach der Auflösung', async () => {
     renderGame()

@@ -86,6 +86,8 @@ const ui = {
     landmarkNext: 'Next landmark',
     landmarkMystery: 'Mystery landmark',
     landmarkPhotoAlt: 'Aerial photograph of a landmark',
+    zoomIn: 'Zoom in',
+    zoomOut: 'Zoom out',
     landmarkMapLabel: 'World map with the landmark',
   },
   de: {
@@ -168,6 +170,8 @@ const ui = {
     landmarkNext: 'Nächstes Wahrzeichen',
     landmarkMystery: 'Gesuchtes Wahrzeichen',
     landmarkPhotoAlt: 'Luftbild eines Wahrzeichens',
+    zoomIn: 'Vergrößern',
+    zoomOut: 'Verkleinern',
     landmarkMapLabel: 'Weltkarte mit dem Wahrzeichen',
   },
 } as const

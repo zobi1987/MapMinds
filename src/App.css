@@ -263,7 +263,10 @@
 .landmark-card-art { background: #8ea894; }
 .city-art { background: #6f8c9a; }
 .journey-art { background: #bd8c58; }
-.landmark-photo { display: block; width: 100%; height: min(72vh, 760px); object-fit: cover; background: #8ea894; }
+.landmark-photo-frame { position: relative; height: min(72vh, 760px); overflow: hidden; background: #8ea894; touch-action: none; }
+.landmark-photo { display: block; width: 100%; height: 100%; object-fit: cover; transform-origin: center center; }
+.landmark-zoom { position: absolute; right: 12px; bottom: 12px; display: flex; gap: 8px; }
+.landmark-zoom button { width: 44px; height: 44px; border: 0; border-radius: 2px; background: rgba(255,255,255,.92); color: var(--forest); font: 700 1.4rem/1 var(--sans, sans-serif); }
 .game-card--planned { opacity: .78; }
 .game-card--planned .card-copy { padding: 20px 24px 25px; }
 .game-card--planned .card-copy h2 { font-size: 1.45rem; }
@@ -353,7 +356,7 @@
 @media (max-width: 900px) {
   .game-cards { grid-template-columns: 1fr; }
   .game-card--active { grid-template-columns: 1fr; }
-  .landmark-photo { height: 70vh; max-height: none; }
+  .landmark-photo-frame { height: 70vh; }
   .card-map-art { height: auto; min-height: 310px; }
   .game-grid { grid-template-columns: 1fr; }
   .map-column { min-height: 0; }

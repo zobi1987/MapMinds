@@ -1,4 +1,4 @@
-import { useReducer, useState } from 'react'
+import { useEffect, useReducer, useRef, useState } from 'react'
 import { LocationMap } from '../../components/LocationMap'
 import { landmarks } from '../../data/landmarks'
 import { localizeLandmark } from '../../data/localizedLandmarks'
@@ -13,6 +13,35 @@ import { LanguageSwitch, useLanguage } from '../../i18n'
 
 interface LandmarkGameProps {
   onExit: () => void
+}
+
+function ZoomablePhoto({ src, alt }: { src: string; alt: string }) {
+  const { copy } = useLanguage()
+  const frameRef = useRef<HTMLDivElement>(null)
+  const [zoom, setZoom] = useState(1)
+  const setClampedZoom = (next: number) => setZoom(Math.min(4, Math.max(1, next)))
+
+  useEffect(() => {
+    const frame = frameRef.current
+    if (!frame) return undefined
+    const onWheel = (event: WheelEvent) => {
+      event.preventDefault()
+      const factor = event.deltaY < 0 ? 1.25 : 1 / 1.25
+      setZoom((current) => Math.min(4, Math.max(1, current * factor)))
+    }
+    frame.addEventListener('wheel', onWheel, { passive: false })
+    return () => frame.removeEventListener('wheel', onWheel)
+  }, [])
+
+  return (
+    <div className="landmark-photo-frame" ref={frameRef}>
+      <img className="landmark-photo" src={src} alt={alt} style={{ transform: `scale(${zoom})` }} />
+      <div className="landmark-zoom">
+        <button type="button" aria-label={copy.zoomIn} onClick={() => setClampedZoom(zoom * 1.5)}>+</button>
+        <button type="button" aria-label={copy.zoomOut} onClick={() => setClampedZoom(zoom / 1.5)}>−</button>
+      </div>
+    </div>
+  )
 }
 
 export function LandmarkGame({ onExit }: LandmarkGameProps) {
@@ -112,11 +141,7 @@ export function LandmarkGame({ onExit }: LandmarkGameProps) {
       <section className="game-grid">
         <div className="map-column">
           {state.status === 'playing' ? (
-            <img
-              className="landmark-photo"
-              src={landmark.image.url}
-              alt={copy.landmarkPhotoAlt}
-            />
+            <ZoomablePhoto src={landmark.image.url} alt={copy.landmarkPhotoAlt} />
           ) : (
             <LocationMap coordinates={landmark.place.coordinates} label={landmark.name} />
           )}

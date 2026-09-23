@@ -2,20 +2,59 @@ import { lazy, Suspense, useEffect, useState } from 'react'
 import './App.css'
 import { hasSeenIntro, markIntroSeen } from './features/person-game/storage'
 import { hasSeenLandmarkIntro, markLandmarkIntroSeen } from './features/landmark-game/storage'
+import { hasSeenCityIntro, markCityIntroSeen } from './features/city-game/storage'
 import { LanguageSwitch, useLanguage } from './i18n'
 
 const PersonGame = lazy(() => import('./features/person-game/PersonGame')
   .then((module) => ({ default: module.PersonGame })))
 const LandmarkGame = lazy(() => import('./features/landmark-game/LandmarkGame')
   .then((module) => ({ default: module.LandmarkGame })))
+const CityGame = lazy(() => import('./features/city-game/CityGame')
+  .then((module) => ({ default: module.CityGame })))
 
 function App() {
   const { copy } = useLanguage()
-  const [view, setView] = useState<'hub' | 'intro' | 'game' | 'landmark-intro' | 'landmark'>('hub')
+  const [view, setView] = useState<'hub' | 'intro' | 'game' | 'landmark-intro' | 'landmark' | 'city-intro' | 'city'>('hub')
 
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [view])
+
+  if (view === 'city') {
+    return (
+      <Suspense fallback={<div className="loading-screen">{copy.loading}</div>}>
+        <CityGame onExit={() => setView('hub')} />
+      </Suspense>
+    )
+  }
+
+  if (view === 'city-intro') {
+    return (
+      <main className="intro-screen">
+        <div className="intro-toolbar">
+          <button className="text-button back-button" onClick={() => setView('hub')}>← {copy.back}</button>
+          <LanguageSwitch />
+        </div>
+        <p className="brand-mark">MM</p>
+        <p className="eyebrow">{copy.howItWorks}</p>
+        <h1>{copy.cityIntroTitle}</h1>
+        <div className="intro-steps">
+          <article><span>01</span><h2>{copy.cityPhotoTitle}</h2><p>{copy.cityPhotoText}</p></article>
+          <article><span>02</span><h2>{copy.cityGuessTitle}</h2><p>{copy.cityGuessText}</p></article>
+          <article><span>03</span><h2>{copy.hintsTitle}</h2><p>{copy.hintsText}</p></article>
+        </div>
+        <button
+          className="primary-button intro-start"
+          onClick={() => {
+            markCityIntroSeen()
+            setView('city')
+          }}
+        >
+          {copy.firstSession}
+        </button>
+      </main>
+    )
+  }
 
   if (view === 'landmark') {
     return (
@@ -91,6 +130,7 @@ function App() {
 
   const startPeopleGame = () => setView(hasSeenIntro() ? 'game' : 'intro')
   const startLandmarkGame = () => setView(hasSeenLandmarkIntro() ? 'landmark' : 'landmark-intro')
+  const startCityGame = () => setView(hasSeenCityIntro() ? 'city' : 'city-intro')
 
   return (
     <main className="hub">
@@ -134,12 +174,16 @@ function App() {
             <button className="primary-button" onClick={startLandmarkGame}>{copy.landmarkStart} <b>→</b></button>
           </div>
         </article>
-        <article className="game-card game-card--planned">
-          <div className="planned-art city-art" aria-hidden="true">⌘</div>
+        <article className="game-card game-card--active">
+          <div className="card-map-art landmark-card-art" aria-hidden="true">
+            <span className="art-pin art-pin--one" />
+          </div>
           <div className="card-copy">
-            <p className="eyebrow">{copy.planned}</p>
+            <p className="eyebrow">{copy.playable}</p>
             <h2>{copy.cities}</h2>
             <p>{copy.citiesDescription}</p>
+            <div><span>{copy.rounds}</span><span>{copy.cityCount}</span></div>
+            <button className="primary-button" onClick={startCityGame}>{copy.cityStart} <b>→</b></button>
           </div>
         </article>
         <article className="game-card game-card--planned">

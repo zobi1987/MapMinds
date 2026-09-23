@@ -20,14 +20,15 @@ const countries = feature(topology, topology.objects.countries) as FeatureCollec
 interface LocationMapProps {
   coordinates: [number, number]
   label: string
+  mapLabel?: string
 }
 
-export function LocationMap({ coordinates, label }: LocationMapProps) {
+export function LocationMap({ coordinates, label, mapLabel }: LocationMapProps) {
   const { copy } = useLanguage()
   const [zoom, setZoom] = useState(4)
 
   return (
-    <div className="world-map" aria-label={`${copy.landmarkMapLabel}: ${label}`}>
+    <div className="world-map" aria-label={`${mapLabel ?? copy.landmarkMapLabel}: ${label}`}>
       <ComposableMap projection="geoEqualEarth" projectionConfig={{ scale: 150 }} width={800} height={400}>
         <ZoomableGroup
           minZoom={1}

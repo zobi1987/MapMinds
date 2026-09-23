@@ -9,14 +9,16 @@ const renderApp = () => render(<LanguageProvider><App /></LanguageProvider>)
 describe('MapMinds hub', () => {
   beforeEach(() => window.localStorage.clear())
 
-  it('shows English by default with two playable and two planned games', () => {
+  it('shows English by default with three playable games and one planned game', () => {
     renderApp()
     expect(screen.getByRole('heading', { name: 'Life Lines' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'What is it?' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Which city?' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Travel Traces' })).toBeInTheDocument()
-    expect(screen.getAllByText('Coming soon')).toHaveLength(2)
+    expect(screen.getAllByText('Coming soon')).toHaveLength(1)
     expect(screen.getByRole('button', { name: /Start What is it/ })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /Start Which city/ })).toBeInTheDocument()
+    expect(screen.getByText('99 cities')).toBeInTheDocument()
   })
 
   it('guides new players through the introduction', async () => {
@@ -45,6 +47,25 @@ describe('MapMinds hub', () => {
     await userEvent.click(screen.getByRole('button', { name: /Start What is it/ }))
     expect(screen.queryByRole('heading', { name: /from above/ })).not.toBeInTheDocument()
     expect(screen.getByRole('img', { name: 'Aerial photograph of a landmark' })).toBeInTheDocument()
+  }, 15000)
+
+  it('shows the city introduction once, then a satellite image', async () => {
+    renderApp()
+    await userEvent.click(screen.getByRole('button', { name: /Start Which city/ }))
+    expect(screen.getByRole('heading', { name: /straight above/ })).toBeInTheDocument()
+    expect(screen.queryByText('99 cities')).not.toBeInTheDocument()
+    await userEvent.click(screen.getByRole('button', { name: /Back/ }))
+    expect(screen.getByRole('heading', { name: 'Which city?' })).toBeInTheDocument()
+
+    await userEvent.click(screen.getByRole('button', { name: /Start Which city/ }))
+    await userEvent.click(screen.getByRole('button', { name: /Start first session/ }))
+    expect(await screen.findByRole('img', { name: 'Satellite image of a city' }, { timeout: 8000 })).toBeInTheDocument()
+    expect(screen.queryByLabelText(/World map with the city/)).not.toBeInTheDocument()
+
+    await userEvent.click(screen.getByRole('button', { name: /Hub/ }))
+    await userEvent.click(screen.getByRole('button', { name: /Start Which city/ }))
+    expect(screen.queryByRole('heading', { name: /straight above/ })).not.toBeInTheDocument()
+    expect(screen.getByRole('img', { name: 'Satellite image of a city' })).toBeInTheDocument()
   }, 15000)
 
   it('switches the complete interface to German and remembers the choice', async () => {

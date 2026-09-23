@@ -131,6 +131,48 @@ test('die Einführung erscheint nur beim ersten Spielstart', async ({ page }) =>
   await expect(page.getByRole('heading', { name: /traces of a life/ })).toHaveCount(0)
 })
 
+test('eine Wahrzeichen-Runde zeigt erst das Foto und die Karte nur bei der Auflösung', async ({ page }) => {
+  await page.goto('/')
+  await expect(page.getByText('100 landmarks')).toBeVisible()
+  await page.getByRole('button', { name: /Start What is it/ }).click()
+  await expect(page.getByRole('heading', { name: /from above/ })).toBeVisible()
+  await page.getByRole('button', { name: /Start first session/ }).click()
+
+  await expect(page.getByText('Round 1/10')).toBeVisible()
+  await expect(page.getByRole('img', { name: 'Aerial photograph of a landmark' })).toBeVisible()
+  await expect(page.getByLabel(/World map with the landmark/)).toHaveCount(0)
+  await expect(page.getByLabel('Name of the landmark')).not.toBeFocused()
+
+  await page.getByRole('button', { name: /Reveal clue 1/ }).click()
+  await expect(page.locator('.score-track .active')).toHaveText('700')
+  await page.getByRole('button', { name: /Reveal clue 2/ }).click()
+  await page.getByRole('button', { name: /Reveal clue 3/ }).click()
+  await page.getByRole('button', { name: /Reveal landmark/ }).click()
+
+  await expect(page.getByLabel(/World map with the landmark/)).toBeVisible()
+  await expect(page.getByRole('img', { name: 'Aerial photograph of a landmark' })).toHaveCount(0)
+  await expect(page.getByRole('link', { name: /Wikidata/ })).toBeVisible()
+
+  await page.getByRole('button', { name: /Next landmark/ }).click()
+  await expect(page.getByText('Round 2/10')).toBeVisible()
+  await expect(page.getByRole('img', { name: 'Aerial photograph of a landmark' })).toBeVisible()
+  await expect(page.getByLabel(/World map with the landmark/)).toHaveCount(0)
+})
+
+test('auf dem Handy füllt das Wahrzeichen-Foto die Ansicht und das Namensfeld ist nicht vorausgewählt', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/')
+  await page.evaluate(() => localStorage.setItem('mapminds.landmark.introSeen', 'true'))
+  await page.reload()
+  await page.getByRole('button', { name: /Start What is it/ }).click()
+
+  const photo = await page.getByRole('img', { name: 'Aerial photograph of a landmark' }).boundingBox()
+  expect(photo).toBeTruthy()
+  expect(photo!.height / 844).toBeGreaterThan(0.45)
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true)
+  await expect(page.getByLabel('Name of the landmark')).not.toBeFocused()
+})
+
 test('wechselt Oberfläche und Spielinhalte zwischen Englisch und Deutsch', async ({ page }) => {
   await page.goto('/')
   await expect(page.getByRole('heading', { name: 'Life Lines' })).toBeVisible()

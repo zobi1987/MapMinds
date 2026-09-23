@@ -1,5 +1,11 @@
-import type { Difficulty, Person } from '../../domain/personSchema'
+import type { Answerable } from '../../domain/answerMatcher'
 import { isAcceptedAnswer } from '../../domain/answerMatcher'
+import type { Difficulty } from '../../domain/personSchema'
+
+export interface SessionEntry extends Answerable {
+  id: string
+  difficulty: Difficulty
+}
 
 export const STAGE_POINTS = [1000, 700, 400, 100] as const
 
@@ -17,8 +23,8 @@ export type GameFeedback =
   | { type: 'hintRevealed'; hintNumber: number }
   | { type: 'wrongHint'; hintNumber: number }
 
-export interface GameState {
-  people: Person[]
+export interface GameState<T extends SessionEntry = SessionEntry> {
+  people: T[]
   roundIndex: number
   stage: number
   status: GameStatus
@@ -27,20 +33,20 @@ export interface GameState {
   results: RoundResult[]
 }
 
-export type GameAction =
-  | { type: 'SUBMIT'; answer: string; catalog: Person[] }
+export type GameAction<T extends SessionEntry = SessionEntry> =
+  | { type: 'SUBMIT'; answer: string; catalog: T[] }
   | { type: 'HINT' }
   | { type: 'NEXT' }
-  | { type: 'RESET'; people: Person[] }
+  | { type: 'RESET'; people: T[] }
 
 function shuffle<T>(values: T[], random: () => number): T[] {
   return [...values].sort(() => random() - 0.5)
 }
 
-export function selectSession(
-  catalog: Person[],
+export function selectSession<T extends SessionEntry>(
+  catalog: T[],
   random: () => number = Math.random,
-): Person[] {
+): T[] {
   const targets: Record<Difficulty, number> = { easy: 4, medium: 4, hard: 2 }
   const picked = (Object.keys(targets) as Difficulty[]).flatMap((difficulty) =>
     shuffle(catalog.filter((person) => person.difficulty === difficulty), random)
@@ -58,7 +64,7 @@ export function selectSession(
   return shuffle(picked, random)
 }
 
-export function createGame(people: Person[]): GameState {
+export function createGame<T extends SessionEntry>(people: T[]): GameState<T> {
   if (people.length !== 10) {
     throw new Error('Eine Session benötigt genau zehn Personen.')
   }
@@ -76,7 +82,7 @@ export function createGame(people: Person[]): GameState {
   }
 }
 
-function reveal(state: GameState, score: number, solved: boolean): GameState {
+function reveal<T extends SessionEntry>(state: GameState<T>, score: number, solved: boolean): GameState<T> {
   const person = state.people[state.roundIndex]
   return {
     ...state,
@@ -87,7 +93,7 @@ function reveal(state: GameState, score: number, solved: boolean): GameState {
   }
 }
 
-export function gameReducer(state: GameState, action: GameAction): GameState {
+export function gameReducer<T extends SessionEntry>(state: GameState<T>, action: GameAction<T>): GameState<T> {
   if (action.type === 'RESET') return createGame(action.people)
 
   if (action.type === 'NEXT') {

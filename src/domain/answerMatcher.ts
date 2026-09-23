@@ -1,4 +1,7 @@
-import type { Person } from './personSchema'
+export interface Answerable {
+  name: string
+  aliases: string[]
+}
 
 export function normalizeAnswer(value: string): string {
   return value
@@ -45,7 +48,7 @@ function distanceAtMostOne(left: string, right: string): boolean {
   return edits + Number(i < left.length || j < right.length) <= 1
 }
 
-function acceptedNames(person: Person, catalog: Person[]): string[] {
+function acceptedNames(person: Answerable, catalog: Answerable[]): string[] {
   const fullName = normalizeAnswer(person.name)
   const surname = fullName.split(' ').at(-1) ?? fullName
   const surnameIsUnique = catalog.filter((candidate) => {
@@ -73,8 +76,8 @@ function acceptedNames(person: Person, catalog: Person[]): string[] {
 
 export function isAcceptedAnswer(
   answer: string,
-  person: Person,
-  catalog: Person[],
+  person: Answerable,
+  catalog: Answerable[],
 ): boolean {
   const normalized = normalizeAnswer(answer)
   if (normalized.length < 3) return false

@@ -226,11 +226,11 @@
   margin: auto;
   padding-bottom: 100px;
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 18px;
 }
 .game-card { overflow: hidden; border: 1px solid var(--line); border-radius: 4px; background: var(--paper-light); }
-.game-card--active { grid-row: span 2; }
+.game-card--active { display: grid; grid-template-columns: 1fr 1.1fr; }
 .card-map-art { position: relative; height: 290px; overflow: hidden; background: #b6c8b6; }
 .card-map-art::before {
   content: ''; position: absolute; inset: 25px -25px; opacity: .45;
@@ -260,8 +260,10 @@
 .secondary-button { color: var(--forest); background: #e4e8df; }
 .text-button { padding: 4px; border: 0; color: var(--ink-soft); background: transparent; }
 .planned-art { min-height: 130px; display: grid; place-items: center; color: rgba(255,255,255,.9); font: 4rem var(--serif); }
-.landmark-art { background: #738f82; }
+.landmark-card-art { background: #8ea894; }
+.city-art { background: #6f8c9a; }
 .journey-art { background: #bd8c58; }
+.landmark-photo { display: block; width: 100%; height: min(72vh, 760px); object-fit: cover; background: #8ea894; }
 .game-card--planned { opacity: .78; }
 .game-card--planned .card-copy { padding: 20px 24px 25px; }
 .game-card--planned .card-copy h2 { font-size: 1.45rem; }
@@ -349,8 +351,9 @@
 .button-row { display: flex; gap: 10px; margin-top: 28px; }
 
 @media (max-width: 900px) {
-  .game-cards { grid-template-columns: 1fr 1fr; }
-  .game-card--active { grid-column: span 2; grid-row: auto; display: grid; grid-template-columns: 1fr 1fr; }
+  .game-cards { grid-template-columns: 1fr; }
+  .game-card--active { grid-template-columns: 1fr; }
+  .landmark-photo { height: 70vh; max-height: none; }
   .card-map-art { height: auto; min-height: 310px; }
   .game-grid { grid-template-columns: 1fr; }
   .map-column { min-height: 0; }

@@ -504,7 +504,7 @@ ${lines.join('\n')}
 ]
 
 const catalogInput: Landmark[] = seeds.map(([
-  wikidataId, name, aliases, kind, feature, fact, difficulty, place,
+  wikidataId, name, aliases, kind, , fact, difficulty, place,
 ]) => ({
   id: slug(name),
   wikidataId,
@@ -516,7 +516,7 @@ const catalogInput: Landmark[] = seeds.map(([
     country: place[1],
     coordinates: [place[2], place[3]],
   },
-  hints: [kind, feature, fact],
+  hints: [kind, fact, place[1]],
   summary: fact,
   sources: [{ label: 'Wikidata', url: \`https://www.wikidata.org/wiki/\${wikidataId}\` }],
   image: landmarkImages[wikidataId],
@@ -529,7 +529,7 @@ await writeFile(new URL('../src/data/landmarks.ts', import.meta.url), landmarksT
 const translations = seeds.map((seed) => {
   const id = slug(seed.name)
   return `  '${id}': {
-    hints: [${JSON.stringify(seed.enKind)}, ${JSON.stringify(seed.enFeature)}, ${JSON.stringify(seed.enFact)}],
+    hints: [${JSON.stringify(seed.enKind)}, ${JSON.stringify(seed.enFact)}, ${JSON.stringify(seed.enCountry)}],
     summary: ${JSON.stringify(seed.enFact)},
     place: { name: ${JSON.stringify(seed.enPlace)}, country: ${JSON.stringify(seed.enCountry)} },
   },`

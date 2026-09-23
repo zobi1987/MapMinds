@@ -21,8 +21,8 @@ export const landmarkSchema = z.object({
   }),
   hints: z.tuple([
     z.string().min(4),
-    z.string().min(4),
     z.string().min(8),
+    z.string().min(2),
   ]),
   difficulty: z.enum(['easy', 'medium', 'hard']),
   summary: z.string().min(20),

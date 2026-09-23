@@ -19,11 +19,17 @@ describe('Wahrzeichenkatalog', () => {
     expect(landmarks.every((landmark) => landmark.image.url.startsWith('https://'))).toBe(true)
   })
 
-  it('nennt im Hinweis weder den Namen noch das Land', () => {
+  it('legt den bisherigen Fakt auf Hinweis zwei und nennt das Land als dritten Hinweis', () => {
     for (const landmark of landmarks) {
       const english = localizeLandmark(landmark, 'en')
+      expect(landmark.hints[1], landmark.id).toBe(landmark.summary)
+      expect(landmark.hints[2], landmark.id).toBe(landmark.place.country)
+      expect(english.hints[1], landmark.id).toBe(english.summary)
+      expect(english.hints[2], landmark.id).toBe(english.place.country)
+
+      const earlyHints = [landmark.hints[0], landmark.hints[1], english.hints[0], english.hints[1]]
       const banned = [landmark.name, landmark.place.country, english.name, english.place.country]
-      for (const hint of [...landmark.hints, ...english.hints]) {
+      for (const hint of earlyHints) {
         for (const term of banned) {
           expect(contains(hint, term), `${landmark.id}: ${hint}`).toBe(false)
         }

@@ -280,10 +280,10 @@ export const englishCityTranslations: Record<string, EnglishCityTranslation> = {
     summary: "Buildings climb steep slopes around a deep, almost circular harbor.",
     place: { name: "Busan", country: "South Korea" },
   },
-  'jakarta': {
-    hints: ["Coastal city", "A very large, flat city lies on a bay, crossed by canals and river arms.", "Indonesia"],
-    summary: "A very large, flat city lies on a bay, crossed by canals and river arms.",
-    place: { name: "Jakarta", country: "Indonesia" },
+  'amman': {
+    hints: ["Highland city", "A dense city spreads across several hills on a dry plateau.", "Jordan"],
+    summary: "A dense city spreads across several hills on a dry plateau.",
+    place: { name: "Amman", country: "Jordan" },
   },
   'casablanca': {
     hints: ["Coastal city", "A large Atlantic port sits beside a sprawling, pale city on a straight coast.", "Morocco"],
@@ -440,10 +440,10 @@ export const englishCityTranslations: Record<string, EnglishCityTranslation> = {
     summary: "A small capital sits in a dry highland basin, surrounded by barren hills.",
     place: { name: "Windhoek", country: "Namibia" },
   },
-  'antananarivo': {
-    hints: ["Highland city", "The city climbs steep hills and rice terraces on a cool highland.", "Madagascar"],
-    summary: "The city climbs steep hills and rice terraces on a cool highland.",
-    place: { name: "Antananarivo", country: "Madagascar" },
+  'baku': {
+    hints: ["Peninsula city", "A large city lies on a spit of land that juts into an oil-rich inland sea.", "Azerbaijan"],
+    summary: "A large city lies on a spit of land that juts into an oil-rich inland sea.",
+    place: { name: "Baku", country: "Azerbaijan" },
   },
   'sansibar': {
     hints: ["Island city", "A coral-stone old town lies on the west coast of a spice island.", "Tanzania"],

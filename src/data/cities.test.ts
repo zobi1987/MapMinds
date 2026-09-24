@@ -54,6 +54,8 @@ const regionByCountry: Record<string, string> = {
   Mongolei: 'asia',
   Usbekistan: 'asia',
   Nordkorea: 'asia',
+  Jordanien: 'asia',
+  Aserbaidschan: 'asia',
   Ägypten: 'africa',
   Südafrika: 'africa',
   Marokko: 'africa',

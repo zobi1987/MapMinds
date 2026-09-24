@@ -96,6 +96,8 @@ const regions = {
   Uruguay: [[-59, -53], [-35, -30]],
   Usbekistan: [[55, 74], [37, 46]],
   Nordkorea: [[124, 131], [37, 43]],
+  Jordanien: [[34, 40], [29, 34]],
+  Aserbaidschan: [[44, 52], [38, 42]],
 }
 
 const inRegion = (seed, point) => {
@@ -184,31 +186,11 @@ async function resolveImage(titles) {
 }
 
 const pinned = {
-  Q3761: 'Accra, Ghana (Copernicus 2025-07-14).png',
-  Q12994: 'Brugge SPOT 1189.jpg',
-  Q8673: 'CBERS 4 MUX 20190327 110 093 RGB765 Lagos NIgeria by oton barros.jpg',
-  Q1055: 'TM5 Hamburg.jpg',
-  Q8818: 'Landsat 8 image Valencia Spain 25 October 2022.png',
-  Q3624: 'Addis Ababa SPOT.1003.jpg',
-  Q2868: 'Lima SPOT 1048.jpg',
-  Q37100: 'Auckland, New Zealand by Planet Labs (cropped to North Shore).jpg',
-  Q33959: 'Nice, France (Copernicus 2025-06-09).png',
-  Q1435: 'Zagreb SPOT 1038.jpg',
-  Q19660: 'Bucharest by Sentinel-2, 2020-07-29.jpg',
-  Q35765: 'Osaka, Japan (satellite view).jpg',
-  Q1850: 'Phnom Penh, Cambodia ESA23779803.png',
-  Q3861: 'Doha, Qatar (satellite view).jpg',
-  Q11739: 'Lahore Satellite view.jpg',
-  Q3820: 'Beirut SPOT 1113.jpg',
-  Q3692: 'Earth from Space- Riyadh, Saudi Arabia ESA502576.jpg',
-  Q994: 'Tbilisi, Georgia (satellite view).jpg',
-  Q23430: 'Ulaanbaatar SPOT 1079.jpg',
-  Q3572: 'Tunis Nasa satellite image.jpg',
-  Q1335: 'Montevideo, Uruguay, city and vicinities, LandSat-5 satellite image, near natural colors, 2011-08-21.jpg',
-  Q40236: 'Manaus, Brazil ESA23779627.png',
-  Q3183: 'Perth, Australia ESA23732503.jpeg',
-  Q269: 'Earth from Space- Tashkent, Uzbekistan ESA24941666.jpg',
-  Q18808: 'Pyongyang satellite image 2007-08-22.jpg',
+  Q406: 'Istanbul by Sentinel-2, 2020-05-09.jpg',
+  Q1773: 'Riga SPOT 1024.jpg',
+  Q2222874: 'Digging Into the History of Stone Town (154309 - oli 20240624 lrg).jpg',
+  Q3805: 'Amman SPOT 1111.jpg',
+  Q9248: 'Baku, Azerbaijan, satellite image, LandSat-5, 2010-09-06.jpg',
 }
 
 const cachePath = new URL('./city-image-cache.json', import.meta.url)

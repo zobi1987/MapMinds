@@ -64,10 +64,10 @@ export const cityImages: Record<string, City['image']> = {
     "license": "CC BY-SA 4.0"
   },
   "Q406": {
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0b/Istanbul_%28ASTER%29.jpg/1920px-Istanbul_%28ASTER%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Istanbul_(ASTER).jpg",
-    "creator": "NASA/METI/AIST/Japan Space Systems, and U.S./Japan ASTER Science Team",
-    "license": "Public domain"
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/00/Istanbul_by_Sentinel-2%2C_2020-05-09.jpg/1920px-Istanbul_by_Sentinel-2%2C_2020-05-09.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File:Istanbul_by_Sentinel-2,_2020-05-09.jpg",
+    "creator": "Copernicus Sentinel-2, ESA",
+    "license": "CC BY-SA 3.0 igo"
   },
   "Q60": {
     "url": "https://upload.wikimedia.org/wikipedia/commons/1/1c/New_York_City%2C_USA_%28satellite_view%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
@@ -333,11 +333,11 @@ export const cityImages: Record<string, City['image']> = {
     "creator": "Cnes - Spot Image",
     "license": "CC BY-SA 3.0"
   },
-  "Q3630": {
-    "url": "https://upload.wikimedia.org/wikipedia/commons/2/22/Jakarta%2C_Indonesia_%28ASTER%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Jakarta,_Indonesia_(ASTER).jpg",
-    "creator": "NASA/METI/AIST/Japan Space Systems, and U.S./Japan ASTER Science Team",
-    "license": "Public domain"
+  "Q3805": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Amman_SPOT_1111.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File:Amman_SPOT_1111.jpg",
+    "creator": "Cnes - Spot Image",
+    "license": "CC BY-SA 3.0"
   },
   "Q7903": {
     "url": "https://upload.wikimedia.org/wikipedia/commons/2/22/Casablanca_SPOT_1208.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
@@ -406,10 +406,10 @@ export const cityImages: Record<string, City['image']> = {
     "license": "Public domain"
   },
   "Q1773": {
-    "url": "https://upload.wikimedia.org/wikipedia/commons/1/14/Riga_from_satellite.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Riga_from_satellite.jpg",
-    "creator": "Unbekannte Urheberschaft",
-    "license": "Public domain"
+    "url": "https://upload.wikimedia.org/wikipedia/commons/0/06/Riga_SPOT_1024.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File:Riga_SPOT_1024.jpg",
+    "creator": "Cnes - Spot Image",
+    "license": "CC BY-SA 3.0"
   },
   "Q1770": {
     "url": "https://upload.wikimedia.org/wikipedia/commons/6/68/Tallinn_SPOT_1020.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
@@ -525,17 +525,17 @@ export const cityImages: Record<string, City['image']> = {
     "creator": "Cnes - Spot Image",
     "license": "CC BY-SA 3.0"
   },
-  "Q3915": {
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ad/Antananarivo_in_Madagascar_ESA23267313.jpeg/1920px-Antananarivo_in_Madagascar_ESA23267313.jpeg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Antananarivo_in_Madagascar_ESA23267313.jpeg",
-    "creator": "European Space Agency",
-    "license": "Attribution"
+  "Q9248": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/43/Baku%2C_Azerbaijan%2C_satellite_image%2C_LandSat-5%2C_2010-09-06.jpg/1920px-Baku%2C_Azerbaijan%2C_satellite_image%2C_LandSat-5%2C_2010-09-06.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File:Baku,_Azerbaijan,_satellite_image,_LandSat-5,_2010-09-06.jpg",
+    "creator": "NASA",
+    "license": "Public domain"
   },
   "Q2222874": {
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/Earth_from_Space-_Zanzibar%2C_Tanzania_ESA510738.jpg/1920px-Earth_from_Space-_Zanzibar%2C_Tanzania_ESA510738.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "pageUrl": "https://commons.wikimedia.org/wiki/File:Earth_from_Space-_Zanzibar,_Tanzania_ESA510738.jpg",
-    "creator": "European Space Agency",
-    "license": "Attribution"
+    "url": "https://upload.wikimedia.org/wikipedia/commons/8/8f/Digging_Into_the_History_of_Stone_Town_%28154309_-_oli_20240624_lrg%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File:Digging_Into_the_History_of_Stone_Town_(154309_-_oli_20240624_lrg).jpg",
+    "creator": "NASA Earth Observatory images by Wanmei Liang, using Landsat data from the U.S. Geological Survey. Story by Adam Voiland.",
+    "license": "Public domain"
   },
   "Q33986": {
     "url": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Valparaiso_SPOT_1360.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
